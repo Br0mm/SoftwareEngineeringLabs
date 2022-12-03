@@ -22,6 +22,17 @@ fun Route.timestamp() {
     }
 }
 
+fun Route.convertTimestamp() {
+    get("/convertTimestamp") {
+        val respond = parseConvertTimestampRespond(call.parameters)
+
+        call.respond(
+            respond.first,
+            respond.second,
+        )
+    }
+}
+
 private fun parseCurrentTimestampRespond(parameters: Parameters): Pair<HttpStatusCode, String> {
     val format = parameters[FORMAT_KEY]
     val timeZone = parameters[TIME_ZONE_KEY]
@@ -41,4 +52,20 @@ private fun parseCurrentTimestampRespond(parameters: Parameters): Pair<HttpStatu
         }
 
     return HttpStatusCode.OK to TimestampProvider.timestampProvider.getCurrentTimestamp(format, timeZone)
+}
+
+private fun parseConvertTimestampRespond(parameters: Parameters): Pair<HttpStatusCode, String> {
+    val format = parameters[FORMAT_KEY]
+    val timeZone = parameters[TIME_ZONE_KEY]
+    val timestamp = parameters[TIMESTAMP_KEY]
+    if (format == null || !TimestampParametersResolver.isValidFormat(format))
+        return HttpStatusCode.BadRequest to "Innvalid timestamp format: $format"
+
+    if (timeZone == null || !TimestampParametersResolver.isValidTimeZone(timeZone))
+        return HttpStatusCode.BadRequest to "Innvalid time zone: $timeZone"
+
+    if (timestamp == null || !TimestampParametersResolver.isValidFormattedTimestamp(timestamp, format))
+        return HttpStatusCode.BadRequest to "Innvalid timestamp: $timestamp"
+
+    return HttpStatusCode.OK to TimestampProvider.timestampProvider.convertFormattedTimestamp(format, timeZone, timestamp)
 }
