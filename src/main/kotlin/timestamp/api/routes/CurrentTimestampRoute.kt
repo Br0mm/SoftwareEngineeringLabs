@@ -8,6 +8,7 @@ import timestamp.api.providers.TimestampProvider
 import timestamp.api.resolvers.TimestampParametersResolver
 
 const val FORMAT_KEY = "format"
+const val TIME_ZONE_KEY = "time_zone"
 
 fun Route.currentTimestamp() {
     get("/currentTimestamp") {
@@ -22,8 +23,12 @@ fun Route.currentTimestamp() {
 
 private fun parseCurrentTimestampRespond(parameters: Parameters): Pair<HttpStatusCode, String> {
     val format = parameters[FORMAT_KEY]
+    val timeZone = parameters[TIME_ZONE_KEY]
     if (format != null && !TimestampParametersResolver.isValidFormat(format))
         return HttpStatusCode.BadRequest to "Innvalid timestamp format: $format"
 
-    return HttpStatusCode.OK to TimestampProvider.timestampProvider.getCurrentTimestamp(format)
+    if (timeZone != null && !TimestampParametersResolver.isValidTimeZone(timeZone))
+        return HttpStatusCode.BadRequest to "Innvalid time zone: $timeZone"
+
+    return HttpStatusCode.OK to TimestampProvider.timestampProvider.getCurrentTimestamp(format, timeZone)
 }

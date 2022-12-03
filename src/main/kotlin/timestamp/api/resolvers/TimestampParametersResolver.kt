@@ -1,6 +1,7 @@
 package timestamp.api.resolvers
 
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 object TimestampParametersResolver {
 
@@ -11,5 +12,9 @@ object TimestampParametersResolver {
         } catch (e: Exception) {
             false
         }
+    }
+
+    fun isValidTimeZone(timeZoneString: String): Boolean {
+        return  (TimeZone.getAvailableIDs()).contains(timeZoneString)
     }
 }
