@@ -1,6 +1,7 @@
 package timestamp.api.resolvers
 
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -24,6 +25,15 @@ object TimestampParametersResolver {
         return try {
             val timeInMillis = timestampString.toLong()
             Instant.ofEpochMilli(timeInMillis).atZone(ZoneId.of("UTC")).toLocalDateTime()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    fun isValidFormattedTimestamp(timestampString: String, formatString: String): Boolean {
+        return try {
+            LocalDateTime.parse(timestampString, DateTimeFormatter.ofPattern(formatString))
             true
         } catch (e: Exception) {
             false

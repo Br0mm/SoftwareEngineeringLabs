@@ -17,6 +17,14 @@ class TimestampProvider {
         return getFormattedTimestamp(formatString, timeZone, localDateTime)
     }
 
+    fun convertFormattedTimestamp(formatString: String, timeZone: String, timestamp: String): String {
+        val localDateTime = LocalDateTime.parse(timestamp, DateTimeFormatter.ofPattern(formatString))
+        val zonedDateTime = ZonedDateTime.now(
+            ZoneId.of(timeZone).normalized()
+        )
+        return localDateTime.toInstant(zonedDateTime.offset).toEpochMilli().toString()
+    }
+
     private fun getFormattedTimestamp(formatString: String?, timeZone: String?, localDateTime: LocalDateTime): String {
         val zoneId = if (timeZone != null) ZoneId.of(timeZone)
         else ZoneId.of("UTC")
