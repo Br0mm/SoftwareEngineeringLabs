@@ -6,9 +6,11 @@ import java.time.format.DateTimeFormatter
 
 class TimestampProvider {
 
-    fun getCurrentTimestamp(): String {
+    fun getCurrentTimestamp(formatString: String? = null): String {
         val localDateTime = LocalDateTime.now(ZoneOffset.UTC)
-        return localDateTime.format(DateTimeFormatter.ISO_DATE_TIME)
+        val formatter = if (formatString != null) DateTimeFormatter.ofPattern(formatString)
+        else DateTimeFormatter.ISO_DATE_TIME
+        return localDateTime.format(formatter)
     }
 
     companion object {
