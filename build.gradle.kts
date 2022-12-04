@@ -8,6 +8,7 @@ plugins {
     kotlin("jvm") version "1.7.20"
     application
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.20"
+    id("io.ktor.plugin") version "2.1.3"
 }
 
 group = "timestamp.api"
@@ -34,4 +35,10 @@ tasks.withType<KotlinCompile> {
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
+}
+
+ktor {
+    fatJar {
+        archiveFileName.set("TimestampApi-$version.jar")
+    }
 }
