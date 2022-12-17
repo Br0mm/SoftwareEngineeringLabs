@@ -1,6 +1,6 @@
 package timestamp.api
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import timestamp.api.plugins.configureMonitoring
 import timestamp.api.plugins.configureRouting
 
