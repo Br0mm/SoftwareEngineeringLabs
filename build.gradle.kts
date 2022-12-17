@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "timestamp.api"
-version = "1.0"
+version = "1.1"
 
 dependencies {
     implementation("io.ktor:ktor-server-core:$ktorVersion")
