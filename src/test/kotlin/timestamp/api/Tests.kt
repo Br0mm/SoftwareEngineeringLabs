@@ -11,26 +11,16 @@ import kotlin.test.assertNotEquals
 class Tests {
 
     @Test
-    fun defaultTimestampTest() {
-        for (i in 0..100) {
-            testApplication {
-                val response = client.get("/timestamp")
-                assertEquals(HttpStatusCode.OK, response.status)
+    fun defaultTimestampTest() = testApplication {
+        val response = client.get("/timestamp")
+        assertEquals(HttpStatusCode.OK, response.status)
 
-                val regex = Regex("""^\d{4}-\d{2}-\d{2}T(\d{2}:){2}\d{2}(.\d{0,3})?$""")
+        val regex = Regex("""^\d{4}-\d{2}-\d{2}T(\d{2}:){2}\d{2}(.\d{0,5})?$""")
 
-                val responseBody = response.bodyAsText()
-
-
-                println("\nResponseText: ")
-                println("$responseBody\n")
-
-                assertEquals(
-                    true,
-                    responseBody.contains(regex),
-                )
-            }
-        }
+        assertEquals(
+            true,
+            response.bodyAsText().contains(regex),
+        )
     }
 
     @Test
