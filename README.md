@@ -1,3 +1,9 @@
+Master: [![CI](https://github.com/Br0mm/SoftwareEngineeringLabs/actions/workflows/default.yml/badge.svg?branch=master)]
+(https://github.com/Br0mm/SoftwareEngineeringLabs/actions/workflows/default.yml)
+
+Develop: [![CI](https://github.com/Br0mm/SoftwareEngineeringLabs/actions/workflows/default.yml/badge.svg?branch=develop)]
+(https://github.com/Br0mm/SoftwareEngineeringLabs/actions/workflows/default.yml)
+
 # TimestampApi
 Api to get timestamp
 ## How to run
